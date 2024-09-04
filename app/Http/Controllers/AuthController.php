@@ -4,78 +4,68 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function create(Request $request){
-
-        $rules =[
-            "name" => 'required|string|max:100',
-            "email" => 'required|string|email|max:100|unique:users',
-            "password" => 'required|string|min:8'
-        ];
-        $validator = Validator::make($request->input(),$rules);
-        if($validator->fails()){
-            return response()->json([
-                'status' => false,
-                'error' => $validator->errors()->all()
-            ],400);
-        }
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => hash::make($request->password)
+    // Método de registro de usuarios
+    public function register(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6'
         ]);
+
+        // Crear el usuario y usar la variable $user
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+        ]);
+
         return response()->json([
-            'status' => true,
-            'message' => 'Usuario creado',
-            'token' => $user->createToken('API TOKEN')->plainTextToken
-        ],201);
-
+            'message' => 'Usuario registrado exitosamente',
+            'user' => $user // Se incluye el usuario creado en la respuesta
+        ], 201);
     }
-   
 
-    public function login(Request $request){
-        $rules = [
-            "email" => 'required|string|email|max:100',
-            "password" => 'required|string'
-        ];
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'error' => $validator->errors()->all()
-            ], 400);
+    // Método de inicio de sesión
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string'
+        ]);
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+            return response()->json(['message' => 'Credenciales incorrectas'], 401);
         }
-    
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json([
-                'status' => false,
-                'errors' => ['error de acceso']
-            ], 401);
-        }
-    
-        $user = User::where('email', $request->email)->first();
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
         return response()->json([
-            'status' => true,
-            'message' => 'Acceso Correcto',
-            'data' => $user,
-            'token' => $user->createToken('API TOKEN')->plainTextToken
-        ], 200);
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+        ]);
     }
-    
 
+    // Nuevo método para obtener información del usuario autenticado
+    public function user(Request $request)
+    {
+        return response()->json($request->user());
+    }
+    // Método para cerrar sesión
     public function logout(Request $request)
-{
-    $user = $request->user();
-    $user->tokens()->delete();
-    return response()->json([
-        'status' => true,
-        'message' => 'Sesión Cerrada'
-    ], 200);
-}
+    {
+        // Revoca el token de acceso
+        $request->user()->currentAccessToken()->delete();
 
+        return response()->json([
+            'message' => 'Sesión cerrada exitosamente'
+        ]);
+    }
 }

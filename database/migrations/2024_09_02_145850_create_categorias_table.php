@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id('id')->primary();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->timestamps();
+        Schema::create('categorias', function (Blueprint $table) {
+            $table->integer('ID')->primary(); // Asegúrate de que 'ID' es la clave primaria
+            $table->string('nombre', 100);
+            $table->text('descripcion')->nullable();
+            $table->boolean('estado')->default(true);
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('categorias');
     }
 };

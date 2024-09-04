@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'web',  // Puedes cambiar a 'api' si quieres que todas las rutas por defecto usen tokens
         'passwords' => 'users',
     ],
 
@@ -27,11 +27,7 @@ return [
     | Of course, a great default configuration has been defined for you
     | here which uses session storage and the Eloquent user provider.
     |
-    | All authentication drivers have a user provider. This defines how the
-    | users are actually retrieved out of your database or other storage
-    | mechanisms used by this application to persist your user's data.
-    |
-    | Supported: "session"
+    | Supported: "session", "token", "sanctum"
     |
     */
 
@@ -39,6 +35,12 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+
+        'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+            'hash' => false,
         ],
     ],
 
