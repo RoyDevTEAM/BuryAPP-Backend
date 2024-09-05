@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('favoritos', function (Blueprint $table) {
             $table->id();
             // Ajustar tipos de datos para coincidir con las claves referenciadas
-            $table->unsignedBigInteger('user_id');
+            $table->Integer('user_id');
             $table->Integer('bar_id');
             $table->timestamps();
 

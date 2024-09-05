@@ -1,19 +1,32 @@
-/.phpunit.cache
+# Directorios y archivos generados automáticamente
+.phpunit.cache
 /node_modules
 /public/build
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
+
+# Archivos de configuración del entorno
 .env
 .env.backup
 .env.production
+
+# Archivos de caché y resultados de pruebas
 .phpunit.result.cache
+
+# Archivos de configuración de Homestead
 Homestead.json
 Homestead.yaml
+
+# Archivos de configuración de autenticación
 auth.json
+
+# Archivos de log de npm y yarn
 npm-debug.log
 yarn-error.log
+
+# Archivos y carpetas de configuración del entorno de desarrollo
 /.fleet
 /.idea
 /.vscode
