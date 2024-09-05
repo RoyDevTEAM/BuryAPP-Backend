@@ -1,18 +1,19 @@
 {
     "version": 2,
+    "framework":null,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@latest" }
+        "api/index.php": { "runtime": "vercel-php@0.7.1" }
     },
     "routes": [
         {
             "src": "/(.*)",
-            "dist": "/api/index.php"
+            "dest": "/api/index.php"
         }
     ],
     "env": {
         "APP_NAME": "Laravel Vercel",
         "APP_ENV": "production",
-        "APP_DEBUG": "false",
+        "APP_DEBUG": "true",
         "APP_URL": "https://laravel-vercel.vercel.app",
 
         "APP_CONFIG_CACHE": "/tmp/config.php",
@@ -23,8 +24,6 @@
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
-        "VIEW_COMPILED_PATH": "/tmp/views",
-        "SSR_TEMP_PATH": "/tmp/ssr",
-        "NODE_PATH": "node"
+        "VIEW_COMPILED_PATH": "/tmp"
     }
 }
