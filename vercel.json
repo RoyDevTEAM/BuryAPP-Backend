@@ -2,7 +2,7 @@
     "version": 2,
     "framework":null,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.7.1" }
+        "api/index.php": { "runtime": "vercel-php@0.4.1" }
     },
     "routes": [
         {
@@ -13,7 +13,7 @@
     "env": {
         "APP_NAME": "Laravel Vercel",
         "APP_ENV": "production",
-        "APP_DEBUG": "true",
+        "APP_DEBUG": "false",
         "APP_URL": "https://laravel-vercel.vercel.app",
 
         "APP_CONFIG_CACHE": "/tmp/config.php",
