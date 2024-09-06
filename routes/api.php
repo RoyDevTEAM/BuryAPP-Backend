@@ -9,6 +9,7 @@ use App\Http\Controllers\VideoController;
 use App\Http\Controllers\MesaController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\FavoritoController;
+use App\Http\Controllers\EventoController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -77,6 +78,13 @@ Route::delete('categorias/{id}', [CategoriaController::class, 'destroy']);
     Route::get('videos/{id}', [VideoController::class, 'show']); // Obtener un video específico
     Route::put('videos/{id}', [VideoController::class, 'update']); // Actualizar un video
     Route::delete('videos/{id}', [VideoController::class, 'destroy']); // Eliminar un video
+
+     // Rutas para gestionar eventos
+     Route::get('eventos', [EventoController::class, 'index']); // Obtener todos los eventos
+     Route::post('eventos', [EventoController::class, 'store']); // Crear un nuevo evento
+     Route::get('eventos/{id}', [EventoController::class, 'show']); // Obtener un evento específico
+     Route::put('eventos/{id}', [EventoController::class, 'update']); // Actualizar un evento
+     Route::delete('eventos/{id}', [EventoController::class, 'destroy']); // Eliminar un evento
 
     //ruta favoritos
     Route::get('favoritos', [FavoritoController::class, 'index']); // Obtener todos los favoritos del usuario autenticado
