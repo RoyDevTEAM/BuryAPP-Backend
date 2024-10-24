@@ -32,8 +32,9 @@ Route::post('auth/login', [AuthController::class, 'login']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('auth/logout', [AuthController::class, 'logout']);
     Route::get('auth/user', [AuthController::class, 'user']); 
-    // Corrige aquí: Cambia POST a GET
-
+    Route::get('auth/user/{id}', [AuthController::class, 'show']);      // Obtener usuario por ID
+    Route::put('auth/user/{id}', [AuthController::class, 'update']);    // Actualizar usuario
+    Route::delete('auth/user/{id}', [AuthController::class, 'destroy']); // Eliminar usuario
     // Rutas para gestionar bares
     Route::get('bares', [BarController::class, 'index']);
     Route::post('bares', [BarController::class, 'store']);
