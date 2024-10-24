@@ -30,7 +30,31 @@ class AuthController extends Controller
             'user' => $user // Se incluye el usuario creado en la respuesta
         ], 201);
     }
+ // Mostrar un usuario específico por ID
+    public function show($id)
+    {
+        $user = User::find($id);
 
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        return response()->json($user);
+    }
+
+    // Método para eliminar un usuario
+    public function destroy($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        $user->delete();
+
+        return response()->json(['message' => 'Usuario eliminado exitosamente']);
+    }
     // Método de inicio de sesión
     public function login(Request $request)
     {
