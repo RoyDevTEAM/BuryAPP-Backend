@@ -24,17 +24,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Rutas públicas
-Route::post('auth/register', [AuthController::class, 'register']);
-Route::post('auth/login', [AuthController::class, 'login']);
+    // Rutas públicas
+    Route::post('auth/register', [AuthController::class, 'register']);
+    Route::post('auth/login', [AuthController::class, 'login']);
 
-// Rutas protegidas por middleware de autenticación
-Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('auth/logout', [AuthController::class, 'logout']);
     Route::get('auth/user', [AuthController::class, 'user']); 
     Route::get('auth/user/{id}', [AuthController::class, 'show']);      // Obtener usuario por ID
     Route::put('auth/user/{id}', [AuthController::class, 'update']);    // Actualizar usuario
     Route::delete('auth/user/{id}', [AuthController::class, 'destroy']); // Eliminar usuario
+
+
     // Rutas para gestionar bares
     Route::get('bares', [BarController::class, 'index']);
     Route::post('bares', [BarController::class, 'store']);
@@ -48,12 +48,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('horarios/{id}', [HorarioController::class, 'show']);
     Route::put('horarios/{id}', [HorarioController::class, 'update']);
     Route::delete('horarios/{id}', [HorarioController::class, 'destroy']);
+
     
     Route::get('mesas', [MesaController::class, 'index']); // Obtener todas las mesas
     Route::post('mesas', [MesaController::class, 'store']); // Crear una nueva mesa
     Route::get('mesas/{id}', [MesaController::class, 'show']); // Obtener una mesa específica
     Route::put('mesas/{id}', [MesaController::class, 'update']); // Actualizar una mesa
     Route::delete('mesas/{id}', [MesaController::class, 'destroy']); // Eliminar una mesa
+
+
     // Rutas para gestionar productos
     Route::get('productos', [ProductoController::class, 'index']);
     Route::post('productos', [ProductoController::class, 'store']);
@@ -61,24 +64,30 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('productos/{id}', [ProductoController::class, 'update']);
     Route::delete('productos/{id}', [ProductoController::class, 'destroy']);
 
+
      // Rutas para manejar imágenes
      Route::get('imagenes', [ImagenController::class, 'index']); // Obtener todas las imágenes
      Route::post('imagenes', [ImagenController::class, 'store']); // Crear una nueva imagen
      Route::get('imagenes/{id}', [ImagenController::class, 'show']); // Obtener una imagen específica
      Route::put('imagenes/{id}', [ImagenController::class, 'update']); // Actualizar una imagen
      Route::delete('imagenes/{id}', [ImagenController::class, 'destroy']); // Eliminar una imagen
-// Rutas para gestionar categorías
-Route::get('categorias', [CategoriaController::class, 'index']);
-Route::post('categorias', [CategoriaController::class, 'store']);
-Route::get('categorias/{id}', [CategoriaController::class, 'show']);
-Route::put('categorias/{id}', [CategoriaController::class, 'update']);
-Route::delete('categorias/{id}', [CategoriaController::class, 'destroy']);
+
+
+    // Rutas para gestionar categorías
+    Route::get('categorias', [CategoriaController::class, 'index']);
+    Route::post('categorias', [CategoriaController::class, 'store']);
+    Route::get('categorias/{id}', [CategoriaController::class, 'show']);
+    Route::put('categorias/{id}', [CategoriaController::class, 'update']);
+    Route::delete('categorias/{id}', [CategoriaController::class, 'destroy']);
+
+
       // Rutas para manejar videos
     Route::get('videos', [VideoController::class, 'index']); // Obtener todos los videos
     Route::post('videos', [VideoController::class, 'store']); // Crear un nuevo video
     Route::get('videos/{id}', [VideoController::class, 'show']); // Obtener un video específico
     Route::put('videos/{id}', [VideoController::class, 'update']); // Actualizar un video
     Route::delete('videos/{id}', [VideoController::class, 'destroy']); // Eliminar un video
+
 
      // Rutas para gestionar eventos
      Route::get('eventos', [EventoController::class, 'index']); // Obtener todos los eventos
@@ -87,6 +96,9 @@ Route::delete('categorias/{id}', [CategoriaController::class, 'destroy']);
      Route::put('eventos/{id}', [EventoController::class, 'update']); // Actualizar un evento
      Route::delete('eventos/{id}', [EventoController::class, 'destroy']); // Eliminar un evento
 
+
+// Rutas protegidas por middleware de autenticación
+Route::middleware(['auth:sanctum'])->group(function () {
     //ruta favoritos
     Route::get('favoritos', [FavoritoController::class, 'index']); // Obtener todos los favoritos del usuario autenticado
     Route::post('favoritos', [FavoritoController::class, 'store']); // Agregar un bar a favoritos
